@@ -1,0 +1,28 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing: border-box;
+}
+html{
+    font-size: 62.5%;
+}
+body{
+    padding:4rem 8rem;
+    overflow-x: hidden;
+    text-align: center;
+    background-color: £ddd;
+    font-size: 'sans-serif';
+    text-transform: capitalize;
+}
+.menu{
+    text-align: center;
+    font-size: 4rem;
+    margin: 3rem 0;
+}
+.menu a{
+    text-decoration: none;
+    background-color: #34568B;
+    padding:1.5rem 2.5rem;
+    border-radius: .5rem;
+    box-shadow: 10px 10px 10px #707070;
+}
