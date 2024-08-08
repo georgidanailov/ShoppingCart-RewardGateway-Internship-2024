@@ -72,3 +72,36 @@ body{
     font-size: large;
     padding:2rem;
 }
+.cart{
+    background-color: #fff;
+    margin: auto;
+}
+table{
+    width:80%;
+    margin: auto;
+    font-size: 2.5rem;
+    border-collapse: collapse;
+}
+th{
+    border-bottom: solid 2px #151515;
+}
+tr{
+    border-bottom: solid 2px gray;
+}
+th, td{
+    width: 33%;
+    padding: 1rem 2rem;
+    margin: 1rem 4rem;
+}
+td>img{
+    width: 14rem;
+    height: 14rem;
+    object-fit: cover;
+    padding-right: 0;
+    margin-right: 0;
+}
+td:nth-child(2){
+    padding-left:0;
+    margin:0;
+    text-align:left;
+}
