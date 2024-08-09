@@ -1,4 +1,4 @@
-**Shopping Cart Application**
+**Shopping Basket Application**
 
 
 A simple shopping cart application built with JavaScript, PHP, MySQL, and Stripe. This project demonstrates the integration of a dynamic shopping cart interface using MutationObserver and handles checkout with Stripe.
