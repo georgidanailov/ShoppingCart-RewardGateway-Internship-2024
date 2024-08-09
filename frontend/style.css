@@ -148,6 +148,11 @@ input::-webkit-outer-spin-button
     left:110%;
     top:-30%;
 }
-.totalRow{
+.totalRow > td{
     text-align: right;
+}
+
+.checkout-btn{
+    margin-left: 68%;
+    margin-top: 1.5%;
 }
