@@ -2,10 +2,10 @@ window.addEventListener('DOMContentLoaded', () => {
     const shopBtn = document.querySelector('.shopBtn')
     const cartBtn = document.querySelector('.cartBtn')
     const itemContainer = document.querySelector('.item-container')
+    const tbody = document.querySelector('.tbody')
+    const checkoutBtn = document.querySelector('.checkout-btn')
     const shopSec = document.querySelector('.shop')
     const cartSec = document.querySelector('.cart')
-    const tbody = document.querySelector('tbody')
-    const checkoutBtn = document.querySelector('.checkout-btn')
 
     shopBtn.addEventListener('click', () => {
         cartSec.style.display = "none"
@@ -30,18 +30,18 @@ window.addEventListener('DOMContentLoaded', () => {
                 div.classList.add('item')
                 div.setAttribute('item-id', product.id)
                 div.innerHTML = `
-                            <img src="./images/${product.image}">
-                            <h3>${product.title}</h3>
-                            <span class="price">$${product.price / 100}/kg</span>
-                            <button class="btn add-btn">Add To Cart</button>
+                          <img src="./images/${product.image}">
+                          <h3>${product.title}</h3>
+                          <span class="price">$${product.price / 100}/kg</span>
+                          <button class="btn add-btn">Add To Cart</button>
             `
                 itemContainer.appendChild(div)
-
             })
         })
+
     let observer = new MutationObserver(mutations => {
         mutations.forEach(mutation => {
-            if (mutation.addedNodes.length !== 1) return
+            if (!mutation.addedNodes.length == 1) return
             if (mutation.target.classList.contains('item-container')) {
                 mutation.addedNodes[0].children[3].addEventListener('click', addCartElm)
             }
@@ -55,17 +55,18 @@ window.addEventListener('DOMContentLoaded', () => {
     observer.observe(itemContainer, { childList: true })
     observer.observe(tbody, { childList: true })
 
+
     function addCartElm() {
         const tr = document.createElement('tr')
         tr.classList.add('item-row')
         tr.setAttribute('item-id', this.parentElement.getAttribute('item-id'))
         tr.innerHTML = `
-        <td class="item-img"> <img src="${this.parentElement.children[0].src}"> </td>
-        <td> ${this.parentElement.children[1].innerText}</td>
-        <td> ${this.parentElement.children[2].innerText}</td>
-        <td><input type="number" value="1"></td>
-        <td><button class="rm-btn">Remove</td>
-        `
+       <td class="item-img"> <img src="${this.parentElement.children[0].src}"> </td>
+       <td> ${this.parentElement.children[1].innerText}</td>
+       <td>${this.parentElement.children[2].innerText}</td>
+       <td><input type="number" value="1"></td>
+       <td><button class="rm-btn">Remove</td>
+       `
         tbody.insertBefore(tr, tbody.lastElementChild)
         updateTotal()
     }
@@ -102,8 +103,8 @@ window.addEventListener('DOMContentLoaded', () => {
 
     checkoutBtn.addEventListener('click', () => {
         let itemsToBuy = []
-        const itemsRows = document.querySelectorAll('.item-row')
-        itemsRows.forEach(row => {
+        const itemRows = document.querySelectorAll('.item-row')
+        itemRows.forEach(row => {
             let obj = {
                 id: row.getAttribute('item-id'),
                 quantity: row.children[3].firstElementChild.value
@@ -112,16 +113,15 @@ window.addEventListener('DOMContentLoaded', () => {
         })
         fetch('http://localhost:5500/backend/myserver.php', {
             method: 'POST',
-            headers:{
-                'Content-Type' : 'application/json',
-                'Accept' : 'application/json'
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
             },
             body: JSON.stringify(itemsToBuy)
-        }).then(res=>res.json())
-        .then(data=>{
-            stripe = Stripe('pk_test_51PlofhKy1MqVmDXfx7M4dbTm4TCQP4yNamKFZteTO23oMolGtG9T4Ut3xv7QvHmFOHnHE3RWEsanGWPlaQ4EzlAP00ZrBT6yau')
-            stripe.redirectToCheckout({sessionId:data.id})
-        })
+        }).then(res => res.json())
+            .then(data => {
+                stripe = Stripe('pk_test_51PlofhKy1MqVmDXfx7M4dbTm4TCQP4yNamKFZteTO23oMolGtG9T4Ut3xv7QvHmFOHnHE3RWEsanGWPlaQ4EzlAP00ZrBT6yau')
+                stripe.redirectToCheckout({ sessionId: data.id })
+            })
     })
-
 })

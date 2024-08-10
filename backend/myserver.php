@@ -1,4 +1,7 @@
 <?php
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 
 require './dbconn.php';
 require './Item.php';
@@ -19,11 +22,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 }
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $itemList = json_decode(file_get_contents('php://input'));
+    $itemList = json_decode(trim(file_get_contents('php://input')));
     $total = 0;
     foreach ($itemList as $item) {
         $id = $conn->real_escape_string($item->id);
-        $quantity = $conn->real_escape_string($item->item->quantity);
+        $quantity = $conn->real_escape_string($item->quantity);
 
         $result = $conn -> query('select price from products where id =' . $id . ';');
         if ($result->num_rows) {
